@@ -1,0 +1,32 @@
+1-Patient Management
+    Registration: Automation systems allow for efficient patient registration and data entry.
+    Admission and Discharge: Tracking and managing patient admissions and discharges.
+
+    Table to keep hospital staff login Information
+    Table that contains information of patient(name,surname,age,id etc.)
+    Table for appointments
+
+2-Appointment Scheduling:
+
+    Online Appointment Booking: Allowing patients to schedule appointments online.
+    Automated Reminders: Sending automated reminders to patients about upcoming appointments.
+3-Pharmacy Management:
+
+    Medication Management: Tracking and managing medication dispensing.
+    Inventory Control: Monitoring and managing pharmacy inventory.
+
+4-Communication Systems:
+    Internal Communication: Facilitating communication among hospital staff.
+    Patient Communication: Keeping patients informed about their care.
+
+5-Security and Privacy:
+
+    Access Control: Implementing measures to ensure data security and patient privacy.
+
+6-Laboratory Information System (LIS):
+    Test and Lab Result Management: Managing laboratory tests and storing results electronically.
+
+7-Asset Management:
+
+    Equipment Tracking: Monitoring and managing medical equipment.
+    Facility Maintenance: Managing the maintenance of hospital facilities.
