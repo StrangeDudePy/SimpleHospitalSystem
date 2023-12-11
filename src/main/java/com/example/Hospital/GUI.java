@@ -7,9 +7,70 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
 
 
-public class GUI implements ActionListener{
+
+
+
+public class GUI implements ActionListener {
+    private static final String G_URL = "jdbc:sqlite:/home/sefa/Desktop/Lecture Materials/OOP/Automation Hospital/maven-demo/Databases/HospitalInfo.db";
+    private static final String Staffpassquery = "SELECT pass FROM staffinfo WHERE staffnum = ? ";
+    private static Connection gconnect = null;
+    protected String logincheck(String id ,String querry){
+        String knownpass=null; 
+        try{
+           
+          
+
+            //Database connection
+            gconnect = DriverManager.getConnection(G_URL);
+
+            //SQL Querry
+
+        
+                //Using prepared statement to start query with parameters
+                PreparedStatement pstms = gconnect.prepareStatement(querry);
+                {
+
+                    //setting the value for querry 
+                    pstms.setString(1,id);
+
+                    ResultSet r = pstms.executeQuery();
+
+                    
+                    // if password is found 
+                    while (r.next()){
+
+                        knownpass = r.getString("pass");
+                        System.out.println(knownpass);
+                      
+                    }
+                    //the id is  not found
+                        {
+                            System.out.println("Geçersiz id");
+
+                        }
+                
+    
+            }
+        
+
+        }
+        catch (SQLException e  ){
+            System.out.println(e.getMessage());
+        }
+
+        return knownpass;
+        
+        
+    }
+
+    
        
     private static JLabel idlabel;
     private static JTextField userid;
@@ -57,11 +118,20 @@ public class GUI implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
         String user = userid.getText();
         char [] passwordchar = passwordt.getPassword();
         String password = new String(passwordchar);
         System.out.println(user + password);
+        if (user.equals("22015") && password==(logincheck(user,Staffpassquery))){
+            System.out.println(logincheck(user,Staffpassquery));
+            succes.setText("Login Succesful");
+        }
+
+        else{
+            succes.setText("Unsuccesful");
+             System.out.println(logincheck(user,Staffpassquery));
+        }
+        
     }
 
   

@@ -7,11 +7,12 @@ import java.sql.Statement;
 
 public class StaffSystem extends SQLConnection {
 
-    void createtabledoctor() {
+    void createtablesstaff() {
         String doctorlogin = "CREATE TABLE IF NOT EXISTS staffinfo (\n "
-                + "staffnum integer PRIMARY KEY,\n"
+                + "staffnum text PRIMARY KEY,\n"
                 + "name_surname text NOT NULL , \n"
-                + "policlinic text NOT NULL \n"
+                + "policlinic text NOT NULL ,\n"
+                + "pass text NOT NULL \n"
                 + ");";
 
         try (Connection conn = connect();  // Use the connect method from SQLConnection
@@ -25,7 +26,7 @@ public class StaffSystem extends SQLConnection {
 
     public static void main(String[] args) {
         StaffSystem staf = new StaffSystem();
-        staf.createtabledoctor();
+        staf.createtablesstaff();
     }
 }
 
