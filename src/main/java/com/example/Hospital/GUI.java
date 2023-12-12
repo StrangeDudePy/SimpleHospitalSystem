@@ -31,6 +31,7 @@ public class GUI implements ActionListener {
                     // If password is found
                     if (r.next()) {
                         knownpass = r.getString("pass");
+                    
                     } else {
                         // The ID is not found
                         System.out.println("Geçersiz id");
@@ -66,7 +67,7 @@ public class GUI implements ActionListener {
     private static JButton option3 = new JButton();
     private static JButton option4 = new JButton();
     private static JPanel panele = new JPanel();
-
+ 
 
     //new window if the login is succesful
     private static void  NewWindow(JFrame obj){
@@ -135,6 +136,7 @@ public class GUI implements ActionListener {
         if(e.getSource()==conbutton){
         if (password.equals(logincheck(user,Staffpassquery))){
             succes.setText("Login Succesful");
+            System.out.println("a");
             if (e.getSource() == conbutton){
                 NewWindow(frame);
             }
