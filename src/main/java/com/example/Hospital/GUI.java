@@ -1,12 +1,7 @@
 package com.example.Hospital;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -36,7 +31,6 @@ public class GUI implements ActionListener {
                     // If password is found
                     if (r.next()) {
                         knownpass = r.getString("pass");
-                        System.out.println(knownpass);
                     } else {
                         // The ID is not found
                         System.out.println("Geçersiz id");
@@ -67,15 +61,17 @@ public class GUI implements ActionListener {
 
     static JPanel panel = new JPanel();
     static JFrame frame = new JFrame();
+    private static JButton option1 = new JButton();
+    private static JButton option2 = new JButton();
+    private static JButton option3 = new JButton();
+    private static JButton option4 = new JButton();
+    private static JPanel panele = new JPanel();
 
 
     //new window if the login is succesful
     private static void  NewWindow(JFrame obj){
-        frame.dispose();
-        newwindowFrame.setSize(400,200);
-        newwindowFrame.setLayout(null);
-        newwindowFrame.setVisible(true);
-      
+        obj.dispose();
+        MainMenu.createMainMenu(option1,option2,option3,option4,panele,newwindowFrame);
     }
     
 
@@ -136,9 +132,8 @@ public class GUI implements ActionListener {
         String user = userid.getText();
         char [] passwordchar = passwordt.getPassword();
         String password = new String(passwordchar);
-        System.out.println(user + password);
+        if(e.getSource()==conbutton){
         if (password.equals(logincheck(user,Staffpassquery))){
-            System.out.println(logincheck(user,Staffpassquery));
             succes.setText("Login Succesful");
             if (e.getSource() == conbutton){
                 NewWindow(frame);
@@ -152,8 +147,11 @@ public class GUI implements ActionListener {
         }
         else{
             succes.setText("Invalid Credentials");
-             System.out.println(logincheck(user,Staffpassquery));
         }
+
+        }
+
+       
         
     }
 
