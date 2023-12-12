@@ -21,54 +21,63 @@ public class GUI implements ActionListener {
     private static final String G_URL = "jdbc:sqlite:/home/sefa/Desktop/Lecture Materials/OOP/Automation Hospital/maven-demo/Databases/HospitalInfo.db";
     private static final String Staffpassquery = "SELECT pass FROM staffinfo WHERE staffnum = ? ";
     private static Connection gconnect = null;
-    protected String logincheck(String id ,String querry){
-        String knownpass=null; 
-        try{
-           
-          
-
-            //Database connection
+    protected String logincheck(String id, String querry) {
+        String knownpass = null;
+        try {
+            // Database connection
             gconnect = DriverManager.getConnection(G_URL);
-
-            //SQL Querry
-
-        
-                //Using prepared statement to start query with parameters
-                PreparedStatement pstms = gconnect.prepareStatement(querry);
-                {
-
-                    //setting the value for querry 
-                    pstms.setString(1,id);
-
-                    ResultSet r = pstms.executeQuery();
-
-                    
-                    // if password is found 
-                    while (r.next()){
-
+    
+            // Using prepared statement to start query with parameters
+            try (PreparedStatement pstms = gconnect.prepareStatement(querry)) {
+                // Setting the value for query
+                pstms.setString(1, id);
+    
+                try (ResultSet r = pstms.executeQuery()) {
+                    // If password is found
+                    if (r.next()) {
                         knownpass = r.getString("pass");
                         System.out.println(knownpass);
+                    } else {
+                        // The ID is not found
+                        System.out.println("Geçersiz id");
                       
                     }
-                    //the id is  not found
-                        {
-                            System.out.println("Geçersiz id");
-
-                        }
-                
-    
+                }
             }
-        
-
-        }
-        catch (SQLException e  ){
+    
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
+           
+        } finally {
+            // Close the database connection in a finally block
+            try {
+                if (gconnect != null) {
+                    gconnect.close();
+                }
+            } catch (SQLException e) {
+                // Handle the closing exception if needed
+                System.out.println("Error closing the connection: " + e.getMessage());
+            }
         }
-
+    
         return knownpass;
-        
-        
     }
+    private static JFrame newwindowFrame = new JFrame();
+
+
+    static JPanel panel = new JPanel();
+    static JFrame frame = new JFrame();
+
+
+    //new window if the login is succesful
+    private static void  NewWindow(JFrame obj){
+        frame.dispose();
+        newwindowFrame.setSize(400,200);
+        newwindowFrame.setLayout(null);
+        newwindowFrame.setVisible(true);
+      
+    }
+    
 
     
        
@@ -79,8 +88,7 @@ public class GUI implements ActionListener {
     private static JButton conbutton;
     private static JLabel succes;
     public static void main(String[] args) {
-        JPanel panel = new JPanel();
-        JFrame frame = new JFrame();
+        
         frame.setSize(400,200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        
@@ -116,19 +124,34 @@ public class GUI implements ActionListener {
         frame.setVisible(true);
     }
 
+
+
+
+   
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        
+
         String user = userid.getText();
         char [] passwordchar = passwordt.getPassword();
         String password = new String(passwordchar);
         System.out.println(user + password);
-        if (user.equals("22015") && password==(logincheck(user,Staffpassquery))){
+        if (password.equals(logincheck(user,Staffpassquery))){
             System.out.println(logincheck(user,Staffpassquery));
             succes.setText("Login Succesful");
+            if (e.getSource() == conbutton){
+                NewWindow(frame);
+            }
+          
         }
 
+
+        else if(logincheck(user, Staffpassquery) == null){
+            succes.setText("Invalid ID");
+        }
         else{
-            succes.setText("Unsuccesful");
+            succes.setText("Invalid Credentials");
              System.out.println(logincheck(user,Staffpassquery));
         }
         
