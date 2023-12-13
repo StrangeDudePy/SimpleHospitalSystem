@@ -1,25 +1,18 @@
 package com.example.Hospital;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
+
 import java.awt.Image;
 
 public class MainMenu extends GUI {
-
-    public static void createMainMenu(JButton option1, JButton option2, JButton option3, JButton option4, JPanel panel, JFrame frame) {
+    protected static void createMainMenu(JButton option1, JButton option2, JButton option3, JButton option4, JPanel panel, JFrame frame) {
 
         frame.setSize(1200, 800);
         frame.add(panel);
         frame.setLayout(null);
         frame.setResizable(false);
 
+        
     
         ImageIcon imageIcon = new ImageIcon("/home/sefa/Downloads/HospitalAdminPanel.png");
         Image image = imageIcon.getImage();
@@ -33,8 +26,9 @@ public class MainMenu extends GUI {
 
         option1 = new JButton("Patient Management System");
         option1.setBounds(300, 450, 600, 50);
-        option1.addActionListener(new GUI());
+        option1.addActionListener(e -> System.out.println("Poo"));
         frame.add(option1);
+    
 
         option2 = new JButton("Option 2 ");
         option2.setBounds(300, 525, 600, 50);
@@ -53,5 +47,13 @@ public class MainMenu extends GUI {
 
 
         frame.setVisible(true);
-    }
+
+     
+    
+    
+        
 }
+}
+
+
+

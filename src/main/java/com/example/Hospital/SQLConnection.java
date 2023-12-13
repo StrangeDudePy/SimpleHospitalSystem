@@ -5,10 +5,10 @@ import java.sql.SQLException;
 
 public class SQLConnection {
     
-    protected static final String URL = "jdbc:sqlite:/home/sefa/Desktop/Lecture Materials/OOP/Automation Hospital/maven-demo/Databases/HospitalInfo.db" ;
+protected static final String URL = "jdbc:sqlite:/home/sefa/Desktop/Lecture Materials/OOP/Automation Hospital/maven-demo/Databases/HospitalInfo.db" ;
 
-Connection connection = SQLConnection.connect();
-    public static Connection connect() {
+Connection connection = SQLConnection.connect(URL);
+    public static Connection connect(String URL) {
         try {
             Class.forName("org.sqlite.JDBC");
             return DriverManager.getConnection(URL);

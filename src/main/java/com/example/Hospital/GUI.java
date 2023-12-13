@@ -16,6 +16,8 @@ public class GUI implements ActionListener {
     private static final String G_URL = "jdbc:sqlite:/home/sefa/Desktop/Lecture Materials/OOP/Automation Hospital/maven-demo/Databases/HospitalInfo.db";
     private static final String Staffpassquery = "SELECT pass FROM staffinfo WHERE staffnum = ? ";
     private static Connection gconnect = null;
+
+
     protected String logincheck(String id, String querry) {
         String knownpass = null;
         try {
@@ -62,15 +64,15 @@ public class GUI implements ActionListener {
 
     static JPanel panel = new JPanel();
     static JFrame frame = new JFrame();
-    private static JButton option1 = new JButton();
-    private static JButton option2 = new JButton();
-    private static JButton option3 = new JButton();
-    private static JButton option4 = new JButton();
-    private static JPanel panele = new JPanel();
- 
+    protected static JButton option1 = new JButton();
+    protected static JButton option2 = new JButton();
+    protected static JButton option3 = new JButton();
+    protected static JButton option4 = new JButton();
+    protected static JPanel panele = new JPanel();
+    
 
     //new window if the login is succesful
-    private static void  NewWindow(JFrame obj){
+    protected static void  NewWindow(JFrame obj){
         obj.dispose();
         MainMenu.createMainMenu(option1,option2,option3,option4,panele,newwindowFrame);
     }
@@ -121,11 +123,6 @@ public class GUI implements ActionListener {
         frame.setVisible(true);
     }
 
-
-
-
-   
-
     @Override
     public void actionPerformed(ActionEvent e) {
         
@@ -139,11 +136,14 @@ public class GUI implements ActionListener {
             System.out.println("a");
             if (e.getSource() == conbutton){
                 NewWindow(frame);
+
+             
             }
+
+           
           
         }
-
-
+        
         else if(logincheck(user, Staffpassquery) == null){
             succes.setText("Invalid ID");
         }
@@ -153,9 +153,15 @@ public class GUI implements ActionListener {
 
         }
 
-       
         
+        
+
+        
+    
+    
+
     }
+
 
   
 }
