@@ -22,9 +22,8 @@ public class PatientManagement extends GUI {
 
     //Arrays of Objects to store patient information data
 
+    PatientInfo[][] arrdata;
     
-    
-    String [][] data ;
 
     private static String[][] tableData(){
         Connection connection = conn.connect(PURL);
