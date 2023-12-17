@@ -8,10 +8,10 @@ public class SQLConnection {
 protected static final String URL = "jdbc:sqlite:/home/sefa/Desktop/Lecture Materials/OOP/Automation Hospital/maven-demo/Databases/HospitalInfo.db" ;
 
 Connection connection = SQLConnection.connect(URL);
-    public static Connection connect(String URL) {
+    public static Connection connect(String dbURL) {
         try {
             Class.forName("org.sqlite.JDBC");
-            return DriverManager.getConnection(URL);
+            return DriverManager.getConnection(dbURL);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to connect to the database");

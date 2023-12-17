@@ -11,12 +11,11 @@ import java.sql.ResultSet;
 
 
 
-
-public class GUI implements ActionListener {
+public class GUI extends SQLConnection implements ActionListener {
     private static final String G_URL = "jdbc:sqlite:/home/sefa/Desktop/Lecture Materials/OOP/Automation Hospital/maven-demo/Databases/HospitalInfo.db";
     private static final String Staffpassquery = "SELECT pass FROM staffinfo WHERE staffnum = ? ";
     private static Connection gconnect = null;
-
+   
 
     protected String logincheck(String id, String querry) {
         String knownpass = null;
@@ -33,6 +32,7 @@ public class GUI implements ActionListener {
                     // If password is found
                     if (r.next()) {
                         knownpass = r.getString("pass");
+                        
                     
                     } else {
                         // The ID is not found
@@ -126,7 +126,7 @@ public class GUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         
-
+        PatientManagement objManagement = new PatientManagement();
         String user = userid.getText();
         char [] passwordchar = passwordt.getPassword();
         String password = new String(passwordchar);
@@ -135,7 +135,9 @@ public class GUI implements ActionListener {
             succes.setText("Login Succesful");
             System.out.println("a");
             if (e.getSource() == conbutton){
+                
                 NewWindow(frame);
+                
 
              
             }

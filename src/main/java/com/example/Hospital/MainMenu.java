@@ -12,8 +12,7 @@ public class MainMenu extends GUI {
         frame.setLayout(null);
         frame.setResizable(false);
 
-        
-    
+        PatientManagement mngObj = new PatientManagement();
         ImageIcon imageIcon = new ImageIcon("/home/sefa/Downloads/HospitalAdminPanel.png");
         Image image = imageIcon.getImage();
         Image newImage = image.getScaledInstance(400, 300, Image.SCALE_DEFAULT);
@@ -26,7 +25,12 @@ public class MainMenu extends GUI {
 
         option1 = new JButton("Patient Management System");
         option1.setBounds(300, 450, 600, 50);
-        option1.addActionListener(e -> System.out.println("Poo"));
+        option1.addActionListener(e -> {System.out.println("Poo");
+        mngObj.getpatintNo();
+        mngObj.getpatintID();
+        mngObj.getpatintName();
+        mngObj.getpatintDate();
+    });
         frame.add(option1);
     
 
