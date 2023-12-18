@@ -154,11 +154,84 @@ public class PatientManagement extends GUI {
     }
      
    
+   
+
+
     private void DeletePatient(){
-        logincheck(IDQuerry, DateQuerry)
+
     }
 
+    private void ModifyPatient(){
+        
+    }
 
+    private void AddPatient(){
+        
+    }
+
+    protected void CreateConfirmationScreen(){
+    
+    JPanel mnpanel = new JPanel();
+    JFrame mnframe = new JFrame();
+    JLabel mnidlabel;
+    JTextField mnuserid;
+    JLabel mnpassLabel;
+    JPasswordField mnpasswordt;
+    JButton mnconbutton;
+    JLabel mnsucces;
+    JLabel mnauthTextLabel;
+    JTextField mnauthTextField;
+
+        mnframe.setSize(400,200);
+        mnframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       
+        mnframe.add(mnpanel);
+
+        mnpanel.setLayout(null);
+
+        mnidlabel = new JLabel("STAFF ID");
+        mnidlabel.setBounds(10,20,80,25);
+        mnpanel.add(mnidlabel);
+
+        mnuserid = new JTextField();
+        mnuserid.setBounds(180,20,165,25);
+        mnpanel.add(mnuserid);
+
+        mnpassLabel = new JLabel("Password");
+        mnpassLabel.setBounds(10,50,80,25);
+        mnpanel.add(mnpassLabel);
+
+        mnpasswordt = new JPasswordField();
+        mnpasswordt.setBounds(180,50,165,25);
+        mnpanel.add(mnpasswordt);
+
+        mnauthTextLabel = new JLabel("Authentication Code");
+        mnauthTextLabel.setBounds(10, 80, 150, 25);
+        mnpanel.add(mnauthTextLabel);
+
+        mnauthTextField = new JTextField();
+        mnauthTextField.setBounds(180,80, 165,25);
+        mnpanel.add(mnauthTextField);
+
+        
+        mnconbutton = new JButton("Login");
+        mnconbutton.setBounds(10,110,80,25);
+        mnconbutton.addActionListener(new GUI());
+        mnpanel.add(mnconbutton);
+
+        mnsucces = new JLabel("");
+        mnsucces.setBounds(10,110,300,25);
+        mnpanel.add(mnsucces);
+
+        mnframe.setVisible(true);
+        frame.setResizable(false);
+    }
+
+    
+
+    private void Authentication(){
+
+    }
 
 
  }

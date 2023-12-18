@@ -121,6 +121,7 @@ public class GUI extends SQLConnection implements ActionListener {
         panel.add(succes);
 
         frame.setVisible(true);
+        frame.setResizable(false);
     }
 
     @Override

@@ -1,11 +1,14 @@
 package com.example.Hospital;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.sql.Date;
 
 public class MainMenu extends GUI { 
+    private static JButton addButton = new JButton("Add");
+    private static JButton deleteButton = new JButton("Delete");
+    private static JButton editButton = new JButton("Edit");
+    private static JPanel buttonPanel = new JPanel(new FlowLayout());
     static PatientManagement managementObj = new PatientManagement();
     static String[] IDdata = managementObj.getpatintID();
     static String[] NameData = managementObj.getpatintName();
@@ -102,11 +105,10 @@ public class MainMenu extends GUI {
         JScrollPane sp = new JScrollPane(y);
         x.add(sp,BorderLayout.CENTER);
 
-        JButton addButton = new JButton("Add");
-        JButton deleteButton = new JButton("Delete");
-        JButton editButton = new JButton("Edit");
         
-        JPanel buttonPanel = new JPanel(new FlowLayout());
+        addButton.addActionListener(e -> {
+            managementObj.CreateConfirmationScreen();
+        });
         buttonPanel.add(addButton);
         buttonPanel.add(deleteButton);
         buttonPanel.add(editButton);
