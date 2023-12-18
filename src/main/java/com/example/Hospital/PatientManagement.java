@@ -3,21 +3,20 @@ package com.example.Hospital;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.PreparedStatement;
 import javax.swing.*;
 import java.sql.DriverManager;
-import java.sql.Time;
 import java.sql.Date;
 
 
 
 
 public class PatientManagement extends GUI {
-    
-
+    MainMenu objMainMenu = new MainMenu();
+    private JFrame o1Frame = new JFrame();
+    private  JTable o1JTable= new JTable() ;
     protected static String PURL="jdbc:sqlite:/home/sefa/Desktop/Lecture Materials/OOP/Automation Hospital/maven-demo/Databases/Patients.db";
     JFrame pamanagementFrame = new JFrame();
     JTable pmanagemenTable = new JTable();
@@ -132,14 +131,16 @@ public class PatientManagement extends GUI {
                 try (ResultSet rNo = NoStatement.executeQuery()) {
 
                     while (rNo.next()) {
-                        appointDate[DateIndex] = rNo.getDate("AppointDate");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        java.util.Date utilDate = dateFormat.parse(rNo.getString("AppointDate"));
+                        appointDate[DateIndex] = new java.sql.Date(utilDate.getTime());
                         DateIndex++;
                     }
                 }
             }
         }
 
-    } catch (SQLException e) {
+    } catch (SQLException | ParseException e) {
         System.out.println("SQLException: " + e.getMessage());
     }
 
@@ -147,14 +148,16 @@ public class PatientManagement extends GUI {
     return appointDate;
 }
 
+
+    public void CreateTheO1(MainMenu obj){
+        obj.CreateOption1Page(o1Frame, o1JTable);
+    }
      
    
-
-    protected void CPManagementMenu(JFrame obj,JTable obj2){
-
-          
-
+    private void DeletePatient(){
+        logincheck(IDQuerry, DateQuerry)
     }
+
 
 
 

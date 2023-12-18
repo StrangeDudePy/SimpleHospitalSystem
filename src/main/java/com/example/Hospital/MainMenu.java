@@ -2,16 +2,23 @@ package com.example.Hospital;
 
 import javax.swing.*;
 
-import java.awt.Image;
+import java.awt.*;
+import java.sql.Date;
 
-public class MainMenu extends GUI {
+public class MainMenu extends GUI { 
+    static PatientManagement managementObj = new PatientManagement();
+    static String[] IDdata = managementObj.getpatintID();
+    static String[] NameData = managementObj.getpatintName();
+    static int[] NumberData = managementObj.getpatintNo();
+    static   Date[] DateData = managementObj.getpatintDate();
+
     protected static void createMainMenu(JButton option1, JButton option2, JButton option3, JButton option4, JPanel panel, JFrame frame) {
 
         frame.setSize(1200, 800);
         frame.add(panel);
         frame.setLayout(null);
         frame.setResizable(false);
-
+        MainMenu nMainMenu = new MainMenu();
         PatientManagement mngObj = new PatientManagement();
         ImageIcon imageIcon = new ImageIcon("/home/sefa/Downloads/HospitalAdminPanel.png");
         Image image = imageIcon.getImage();
@@ -29,7 +36,8 @@ public class MainMenu extends GUI {
         mngObj.getpatintNo();
         mngObj.getpatintID();
         mngObj.getpatintName();
-        mngObj.getpatintDate();
+        mngObj.CreateTheO1(nMainMenu);
+        
     });
         frame.add(option1);
     
@@ -57,6 +65,62 @@ public class MainMenu extends GUI {
     
         
 }
+
+    public void CreateOption1Page(JFrame x , JTable y){
+        Object[][] data = new Object[100][4];
+        
+        
+        x = new JFrame();
+        x.setResizable(false);
+       
+      
+        x.setTitle("Patients");
+ 
+        for(int k = 0; NameData[k]!=null;k++)
+        {
+            for (int j = 0 ; j <= k ; j++){
+                data[k][j] = NumberData[k];
+                data[k][j+1] = NameData[k];
+                data[k][j+2] = IDdata[k];
+                data[k][j+3] = DateData[k];
+
+            }
+            
+        }
+ 
+       
+
+
+
+        String[] columnNames = { "Patient No", "Patient Name-Surname", "ID","Appointment Date" };
+ 
+       
+        y= new JTable(data, columnNames);
+        y.setBounds(30, 40, 300, 450);
+ 
+        // adding it to JScrollPane
+        JScrollPane sp = new JScrollPane(y);
+        x.add(sp,BorderLayout.CENTER);
+
+        JButton addButton = new JButton("Add");
+        JButton deleteButton = new JButton("Delete");
+        JButton editButton = new JButton("Edit");
+        
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.add(addButton);
+        buttonPanel.add(deleteButton);
+        buttonPanel.add(editButton);
+
+        x.add(buttonPanel,BorderLayout.SOUTH);
+        x.setSize(500,300);
+
+        // Frame Size
+        x.setSize(600, 400);
+        // Frame Visible = true
+        x.setVisible(true);
+    
+ 
+    }
 }
 
 
