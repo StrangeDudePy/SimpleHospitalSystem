@@ -5,6 +5,7 @@ import java.awt.*;
 import java.sql.Date;
 
 public class MainMenu extends GUI { 
+    private static StaffSystem staffSystem = new StaffSystem();
     private static JButton addButton = new JButton("Add");
     private static JButton deleteButton = new JButton("Delete");
     private static JButton editButton = new JButton("Edit");
@@ -106,9 +107,17 @@ public class MainMenu extends GUI {
         x.add(sp,BorderLayout.CENTER);
 
         
-        addButton.addActionListener(e -> {
-            managementObj.CreateConfirmationScreen();
-        });
+        addButton.addActionListener(e -> { if (staffSystem.AccessCheck(super.getid()) == 1){
+            System.out.println("2");
+            JFrame alerfFrame = new JFrame();
+            JOptionPane.showMessageDialog(alerfFrame, "Access Denied");
+            
+        }
+    
+    
+        else {
+            System.out.println("3");
+        }});
         buttonPanel.add(addButton);
         buttonPanel.add(deleteButton);
         buttonPanel.add(editButton);

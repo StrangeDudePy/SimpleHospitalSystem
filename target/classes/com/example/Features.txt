@@ -5,11 +5,14 @@
     Table to keep hospital staff login Information
     Table that contains information of patient(name,surname,age,id etc.)
     Table for appointments
+    Appointment Management
+    AUTH HIYERARCY 
+    LVL 1 - TOP LEVEL Access
+    
+    LVL 2 - DOCTORS AND MEDICAL authiroties
 
-2-Appointment Scheduling:
-
-    Online Appointment Booking: Allowing patients to schedule appointments online.
-    Automated Reminders: Sending automated reminders to patients about upcoming appointments.
+    LVL 3 - Nurses and other medical assistanst 
+    
 3-Pharmacy Management:
 
     Medication Management: Tracking and managing medication dispensing.
@@ -22,6 +25,9 @@
 5-Security and Privacy:
 
     Access Control: Implementing measures to ensure data security and patient privacy.
+    AuthApp
+    Admin Mail
+    RSA Encryption
 
 6-Laboratory Information System (LIS):
     Test and Lab Result Management: Managing laboratory tests and storing results electronically.

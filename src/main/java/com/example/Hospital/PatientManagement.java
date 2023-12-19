@@ -12,8 +12,8 @@ import java.sql.Date;
 
 
 
-
 public class PatientManagement extends GUI {
+
     MainMenu objMainMenu = new MainMenu();
     private JFrame o1Frame = new JFrame();
     private  JTable o1JTable= new JTable() ;
@@ -165,48 +165,35 @@ public class PatientManagement extends GUI {
         
     }
 
-    private void AddPatient(){
-        
-    }
-
-    protected void CreateConfirmationScreen(){
     
-    JPanel mnpanel = new JPanel();
-    JFrame mnframe = new JFrame();
-    JLabel mnidlabel;
-    JTextField mnuserid;
-    JLabel mnpassLabel;
-    JPasswordField mnpasswordt;
-    JButton mnconbutton;
-    JLabel mnsucces;
-    JLabel mnauthTextLabel;
-    JTextField mnauthTextField;
+    /*private void CreatePatientAddPage(){
+        JPanel addpanel = new JPanel();
+        JFrame addFrame = new JFrame();
+        JLabel patientNameLabel ;
+        JLabel patientAppointDate ;
+        JLabel patientIDLabel ;
+        JTextField nameField;
+        JTextField dateField;
+        JTextField idfield;
 
-        mnframe.setSize(400,200);
-        mnframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       
-        mnframe.add(mnpanel);
+        addFrame.setSize(400,300);
+        addFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        mnpanel.setLayout(null);
+        addFrame.add(addpanel);
 
-        mnidlabel = new JLabel("STAFF ID");
-        mnidlabel.setBounds(10,20,80,25);
-        mnpanel.add(mnidlabel);
+        addpanel.setLayout(null);
 
-        mnuserid = new JTextField();
-        mnuserid.setBounds(180,20,165,25);
-        mnpanel.add(mnuserid);
 
-        mnpassLabel = new JLabel("Password");
-        mnpassLabel.setBounds(10,50,80,25);
-        mnpanel.add(mnpassLabel);
+        patientNameLabel = new JLabel("Patient Name");
+        patientNameLabel.setBounds(10,50,80,25);
+        addpanel.add(patientNameLabel);
 
-        mnpasswordt = new JPasswordField();
-        mnpasswordt.setBounds(180,50,165,25);
-        mnpanel.add(mnpasswordt);
+        nameField = new JTextField();
+        nameField.setBounds(180,50,165,25);
+        nameField.add(nameField);
 
-        mnauthTextLabel = new JLabel("Authentication Code");
-        mnauthTextLabel.setBounds(10, 80, 150, 25);
+        idfield = new JLabel("Patient ID");
+        idfield.setBounds(10, 80, 150, 25);
         mnpanel.add(mnauthTextLabel);
 
         mnauthTextField = new JTextField();
@@ -219,19 +206,41 @@ public class PatientManagement extends GUI {
         mnconbutton.addActionListener(new GUI());
         mnpanel.add(mnconbutton);
 
-        mnsucces = new JLabel("");
-        mnsucces.setBounds(10,110,300,25);
-        mnpanel.add(mnsucces);
 
-        mnframe.setVisible(true);
-        frame.setResizable(false);
+
+
+
+    }
+    */
+    private void AddPatient(){
+        
     }
 
     
+    
+    public void AccessAlert(){
+        JFrame alerfFrame = new JFrame();
+        alerfFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        alerfFrame.setResizable(false);
+        alerfFrame.setLayout(null);  
+        JPanel alertPanel = new JPanel();
+    
+        alerfFrame.setSize(400, 200);
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(e -> {
+            JOptionPane.showMessageDialog(alerfFrame, "Access Denied");
+        });
+    
+       
+        okButton.setBounds(150, 80, 100, 40);  
+    
+        alertPanel.add(okButton);
+        alerfFrame.add(okButton);
+        alerfFrame.add(alertPanel);
+    
+        alerfFrame.setVisible(true);
 
-    private void Authentication(){
-
+        
     }
-
 
  }

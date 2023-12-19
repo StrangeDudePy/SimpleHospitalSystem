@@ -127,7 +127,7 @@ public class GUI extends SQLConnection implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        PatientManagement objManagement = new PatientManagement();
+       
         String user = userid.getText();
         char [] passwordchar = passwordt.getPassword();
         String password = new String(passwordchar);
@@ -156,14 +156,15 @@ public class GUI extends SQLConnection implements ActionListener {
 
         }
 
-        
-        
-
-        
-    
     
 
     }
+
+    public static  String getid(){
+        String idinfo = userid.getText();
+        return idinfo;
+    }
+    
 
 
   
