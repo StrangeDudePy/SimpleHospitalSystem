@@ -13,7 +13,7 @@ public class StaffSystem extends SQLConnection {
     private static int AccessLevel ;
     private static Connection aconnect = null;
     private static String  accessQuerry = "Select AuthLevel FROM staffinfo WHERE staffnum = ?";
-    private static final String STAFF_URL = "jdbc:sqlite:/home/sefa/Desktop/Lecture Materials/OOP/Automation Hospital/maven-demo/Databases/HospitalInfo.db";
+    private static final String STAFF_URL = "jdbc:sqlite:Databases/HospitalInfo.db";
     void createtablesstaff() {
         String doctorlogin = "CREATE TABLE IF NOT EXISTS staffinfo (\n "
                 + "staffnum text PRIMARY KEY,\n"

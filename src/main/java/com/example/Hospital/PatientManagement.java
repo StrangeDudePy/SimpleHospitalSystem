@@ -1,33 +1,28 @@
 
 package com.example.Hospital;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.sql.PreparedStatement;
 import javax.swing.*;
-import java.sql.DriverManager;
-import java.sql.Date;
+import java.sql.*;
 
 
 
-public class PatientManagement extends GUI {
-
-    MainMenu objMainMenu = new MainMenu();
-    private JFrame o1Frame = new JFrame();
-    private  JTable o1JTable= new JTable() ;
-    protected static String PURL="jdbc:sqlite:/home/sefa/Desktop/Lecture Materials/OOP/Automation Hospital/maven-demo/Databases/Patients.db";
+public class PatientManagement  {
     JFrame pamanagementFrame = new JFrame();
     JTable pmanagemenTable = new JTable();
+    private JFrame o1Frame = new JFrame();
+    private  JTable o1JTable= new JTable() ;
+    protected static String PURL="jdbc:sqlite:Databases/Patients.db";
     private static String NoQuerry = "SELECT PatientNo FROM PatientsInfo";
     private static String IDQuerry = "SELECT ID FROM PatientsInfo";
     private static String PatientNameQuerry = "SELECT PatientName FROM PatientsInfo";
     private static String DateQuerry = "SELECT AppointDate FROM PatientsInfo";
+    private static String TimeQuerry = "SELECT AppointTime FROM PatientsInfo";
     private static int patientsNOs[]= new int[100];
     private static String patientsID[] = new String[100];
     private static Date appointDate[] = new Date[100];
     private static String patientNames[] = new String[100];
+    private static String appointTime[] = new String[100];
 
     protected int[] getpatintNo() {
         try {
@@ -149,6 +144,41 @@ public class PatientManagement extends GUI {
 }
 
 
+protected String[] getappointTime() {
+        try {
+            int TimeIndex = 0;
+    
+            // Create a connection
+            try (Connection connectionOBJ = DriverManager.getConnection(PURL)) {
+    
+                try (PreparedStatement TimeStatement = connectionOBJ.prepareStatement(TimeQuerry)) {
+    
+                    try (ResultSet rTime = TimeStatement.executeQuery()) {
+    
+                        while (rTime.next()) {
+                            appointTime[TimeIndex] = rTime.getString("AppointTime");
+                            TimeIndex++;
+                          
+                        }
+                    }
+                }
+            }
+    
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+        }
+    
+        
+        System.out.println(appointTime[0]);
+        return appointTime;
+    }
+
+
+
+
+
+
+
     public void CreateTheO1(MainMenu obj){
         obj.CreateOption1Page(o1Frame, o1JTable);
     }
@@ -218,29 +248,6 @@ public class PatientManagement extends GUI {
 
     
     
-    public void AccessAlert(){
-        JFrame alerfFrame = new JFrame();
-        alerfFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        alerfFrame.setResizable(false);
-        alerfFrame.setLayout(null);  
-        JPanel alertPanel = new JPanel();
-    
-        alerfFrame.setSize(400, 200);
-        JButton okButton = new JButton("OK");
-        okButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(alerfFrame, "Access Denied");
-        });
-    
-       
-        okButton.setBounds(150, 80, 100, 40);  
-    
-        alertPanel.add(okButton);
-        alerfFrame.add(okButton);
-        alerfFrame.add(alertPanel);
-    
-        alerfFrame.setVisible(true);
-
-        
-    }
+   
 
  }

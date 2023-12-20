@@ -11,10 +11,15 @@ public class MainMenu extends GUI {
     private static JButton editButton = new JButton("Edit");
     private static JPanel buttonPanel = new JPanel(new FlowLayout());
     static PatientManagement managementObj = new PatientManagement();
-    static String[] IDdata = managementObj.getpatintID();
-    static String[] NameData = managementObj.getpatintName();
-    static int[] NumberData = managementObj.getpatintNo();
-    static   Date[] DateData = managementObj.getpatintDate();
+    private static String[] IDdata = managementObj.getpatintID();
+    private static String[] NameData = managementObj.getpatintName();
+    private static int[] NumberData = managementObj.getpatintNo();
+    private static  Date[] DateData = managementObj.getpatintDate();
+    private static String[] TimeData = managementObj.getappointTime();
+    
+
+
+
 
     protected static void createMainMenu(JButton option1, JButton option2, JButton option3, JButton option4, JPanel panel, JFrame frame) {
 
@@ -70,8 +75,14 @@ public class MainMenu extends GUI {
         
 }
 
+
+
+
+        
+        
+
     public void CreateOption1Page(JFrame x , JTable y){
-        Object[][] data = new Object[100][4];
+        Object[][] data = new Object[100][5];
         
         
         x = new JFrame();
@@ -87,6 +98,7 @@ public class MainMenu extends GUI {
                 data[k][j+1] = NameData[k];
                 data[k][j+2] = IDdata[k];
                 data[k][j+3] = DateData[k];
+                data[k][j+4] = TimeData[k];
 
             }
             
@@ -96,10 +108,15 @@ public class MainMenu extends GUI {
 
 
 
-        String[] columnNames = { "Patient No", "Patient Name-Surname", "ID","Appointment Date" };
+        String[] columnNames = { "Patient No", "Patient Name-Surname", "ID","Appointment Date" ,"Appoint Time"};
  
        
-        y= new JTable(data, columnNames);
+        y= new JTable(data, columnNames){
+            @Override
+            public boolean isCellEditable(int row, int column) {                
+                return false;               
+        }
+        };
         y.setBounds(30, 40, 300, 450);
  
         // adding it to JScrollPane
@@ -108,25 +125,40 @@ public class MainMenu extends GUI {
 
         
         addButton.addActionListener(e -> { if (staffSystem.AccessCheck(super.getid()) == 1){
-            System.out.println("2");
             JFrame alerfFrame = new JFrame();
             JOptionPane.showMessageDialog(alerfFrame, "Access Denied");
             
         }
-    
-    
-        else {
+       else {
             System.out.println("3");
         }});
+
+        deleteButton.addActionListener(e -> { if (staffSystem.AccessCheck(super.getid()) == 1){
+            JFrame deletealerfFrame = new JFrame();
+            JOptionPane.showMessageDialog(deletealerfFrame, "Access Denied");
+            
+        }
+       else {
+            System.out.println("3");
+        }});
+
+        editButton.addActionListener(e -> { if (staffSystem.AccessCheck(super.getid()) == 1){
+            JFrame alerfmodifyFrame = new JFrame();
+            JOptionPane.showMessageDialog(alerfmodifyFrame, "Access Denied");
+            
+        }
+       else {
+            System.out.println("3");
+        }});
+    
         buttonPanel.add(addButton);
         buttonPanel.add(deleteButton);
         buttonPanel.add(editButton);
 
         x.add(buttonPanel,BorderLayout.SOUTH);
-        x.setSize(500,300);
 
         // Frame Size
-        x.setSize(600, 400);
+        x.setSize(800, 400);
         // Frame Visible = true
         x.setVisible(true);
     

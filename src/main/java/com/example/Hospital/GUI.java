@@ -2,22 +2,17 @@ package com.example.Hospital;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
+import java.sql.*;
 
 
 
 
-public class GUI extends SQLConnection implements ActionListener {
-    private static final String G_URL = "jdbc:sqlite:/home/sefa/Desktop/Lecture Materials/OOP/Automation Hospital/maven-demo/Databases/HospitalInfo.db";
-    private static final String Staffpassquery = "SELECT pass FROM staffinfo WHERE staffnum = ? ";
+public class GUI extends PatientManagement implements ActionListener {
+    private static String G_URL = "jdbc:sqlite:Databases/HospitalInfo.db";
+    private static String Staffpassquery = "SELECT pass FROM staffinfo WHERE staffnum = ? ";
     private static Connection gconnect = null;
-   
 
-    protected String logincheck(String id, String querry) {
+    public String logincheck(String id, String querry) {
         String knownpass = null;
         try {
             // Database connection
@@ -59,16 +54,15 @@ public class GUI extends SQLConnection implements ActionListener {
     
         return knownpass;
     }
+    
     private static JFrame newwindowFrame = new JFrame();
-
-
-    static JPanel panel = new JPanel();
-    static JFrame frame = new JFrame();
-    protected static JButton option1 = new JButton();
-    protected static JButton option2 = new JButton();
-    protected static JButton option3 = new JButton();
-    protected static JButton option4 = new JButton();
-    protected static JPanel panele = new JPanel();
+    private static JPanel panel = new JPanel();
+    private static JFrame frame = new JFrame();
+    private static JButton option1 = new JButton();
+    private static JButton option2 = new JButton();
+    private static JButton option3 = new JButton();
+    private static JButton option4 = new JButton();
+    private static JPanel panele = new JPanel();
     
 
     //new window if the login is succesful
@@ -78,8 +72,6 @@ public class GUI extends SQLConnection implements ActionListener {
     }
     
 
-    
-       
     private static JLabel idlabel;
     private static JTextField userid;
     private static JLabel passLabel;

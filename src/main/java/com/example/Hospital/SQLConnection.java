@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class SQLConnection {
     
-protected static final String URL = "jdbc:sqlite:/home/sefa/Desktop/Lecture Materials/OOP/Automation Hospital/maven-demo/Databases/HospitalInfo.db" ;
+protected static final String URL = "jdbc:sqlite:Databases/HospitalInfo.db" ;
 
 Connection connection = SQLConnection.connect(URL);
     public static Connection connect(String dbURL) {
