@@ -16,7 +16,7 @@ public class MainMenu extends GUI {
     private static int[] NumberData = managementObj.getpatintNo();
     private static  Date[] DateData = managementObj.getpatintDate();
     private static String[] TimeData = managementObj.getappointTime();
-    
+    private static AddButton Addthing = new AddButton();
 
 
 
@@ -126,11 +126,13 @@ public class MainMenu extends GUI {
         
         addButton.addActionListener(e -> { if (staffSystem.AccessCheck(super.getid()) == 1){
             JFrame alerfFrame = new JFrame();
-            JOptionPane.showMessageDialog(alerfFrame, "Access Denied");
+            Addthing.getAddPatientMethod();
+            //JOptionPane.showMessageDialog(alerfFrame, "Access Denied");
             
         }
        else {
-            System.out.println("3");
+            
+            Addthing.getAddPatientMethod();
         }});
 
         deleteButton.addActionListener(e -> { if (staffSystem.AccessCheck(super.getid()) == 1){

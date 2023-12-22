@@ -91,7 +91,7 @@ public class GUI extends PatientManagement implements ActionListener {
         idlabel.setBounds(10,20,80,25);
         panel.add(idlabel);
 
-        userid = new JTextField(20);
+        userid = new JTextField();
         userid.setBounds(100,20,165,25);
         panel.add(userid);
 
