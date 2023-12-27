@@ -11,12 +11,23 @@ public class MainMenu extends GUI {
     private static JButton editButton = new JButton("Edit");
     private static JPanel buttonPanel = new JPanel(new FlowLayout());
     static PatientManagement managementObj = new PatientManagement();
-    private static String[] IDdata = managementObj.getpatintID();
-    private static String[] NameData = managementObj.getpatintName();
-    private static int[] NumberData = managementObj.getpatintNo();
-    private static  Date[] DateData = managementObj.getpatintDate();
-    private static String[] TimeData = managementObj.getappointTime();
+    
+    
+    private static String[] IDdata, NameData;
+    private static int[] NumberData;
+    private static Date[] DateData;
+    private static String[] TimeData;
+    
+    static {
+        IDdata = managementObj.getpatintID();
+        NameData = managementObj.getpatintName();
+        NumberData = managementObj.getpatintNo();
+        DateData = managementObj.getpatintDate();
+        TimeData = managementObj.getappointTime();
+    }
+    
     private static AddButton Addthing = new AddButton();
+    
 
 
 
