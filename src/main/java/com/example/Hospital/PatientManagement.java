@@ -18,11 +18,13 @@ public class PatientManagement  {
     private static String PatientNameQuerry = "SELECT PatientName FROM PatientsInfo";
     private static String DateQuerry = "SELECT AppointDate FROM PatientsInfo";
     private static String TimeQuerry = "SELECT AppointTime FROM PatientsInfo";
+    private static String TelNoQuerry = "SELECT TelNo FROM PatientsInfo";
     private static int patientsNOs[]= new int[100];
     private static String patientsID[] = new String[100];
     private static Date appointDate[] = new Date[100];
     private static String patientNames[] = new String[100];
     private static String appointTime[] = new String[100];
+    private static String telNo[] = new String[100];
 
     protected int[] getpatintNo() {
         try {
@@ -175,7 +177,35 @@ protected String[] getappointTime() {
 
 
 
+protected String[] getpatinttelNo() {
+        try {
+            int telNoIndex = 0;
+    
+            // Create a connection
+            try (Connection connectionOBJ = DriverManager.getConnection(PURL)) {
+    
+                try (PreparedStatement NoStatement = connectionOBJ.prepareStatement(TelNoQuerry)) {
+    
+                    try (ResultSet rNo = NoStatement.executeQuery()) {
+    
+                        while (rNo.next()) {
+                            telNo[telNoIndex] = rNo.getString("TelNo");
+                            telNoIndex++;
+                          
+                        }
+                    }
+                }
+            }
+    
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+        }
+        
+        
 
+        System.out.println(telNo[0]);
+        return telNo;
+    }
 
 
 

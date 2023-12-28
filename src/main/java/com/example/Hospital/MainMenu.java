@@ -17,6 +17,7 @@ public class MainMenu extends GUI {
     private static int[] NumberData;
     private static Date[] DateData;
     private static String[] TimeData;
+    private static String[] TelNoData;
     
     static {
         IDdata = managementObj.getpatintID();
@@ -24,6 +25,7 @@ public class MainMenu extends GUI {
         NumberData = managementObj.getpatintNo();
         DateData = managementObj.getpatintDate();
         TimeData = managementObj.getappointTime();
+        TelNoData = managementObj.getpatinttelNo();
     }
     
     private static AddButton Addthing = new AddButton();
@@ -77,7 +79,7 @@ public class MainMenu extends GUI {
         option4.addActionListener(new GUI());
         frame.add(option4);
 
-
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
      
@@ -93,7 +95,7 @@ public class MainMenu extends GUI {
         
 
     public void CreateOption1Page(JFrame x , JTable y){
-        Object[][] data = new Object[100][5];
+        Object[][] data = new Object[100][6];
         
         
         x = new JFrame();
@@ -105,11 +107,12 @@ public class MainMenu extends GUI {
         for(int k = 0; NameData[k]!=null;k++)
         {
             for (int j = 0 ; j <= k ; j++){
-                data[k][j] = NumberData[k];
-                data[k][j+1] = NameData[k];
-                data[k][j+2] = IDdata[k];
-                data[k][j+3] = DateData[k];
-                data[k][j+4] = TimeData[k];
+                data[k][0] = NumberData[k];
+                data[k][1] = NameData[k];
+                data[k][2] = IDdata[k];
+                data[k][3] = DateData[k];
+                data[k][4] = TimeData[k];
+                data[k][5] = TelNoData[k];
 
             }
             
@@ -119,7 +122,7 @@ public class MainMenu extends GUI {
 
 
 
-        String[] columnNames = { "Patient No", "Patient Name-Surname", "ID","Appointment Date" ,"Appoint Time"};
+        String[] columnNames = { "Patient No", "Patient Name-Surname", "ID","Appointment Date" ,"Appoint Time","TelNo"};
  
        
         y= new JTable(data, columnNames){
