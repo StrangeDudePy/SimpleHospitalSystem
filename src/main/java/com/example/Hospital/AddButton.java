@@ -53,11 +53,49 @@ public class AddButton extends MainMenu {
         addmenuPanel.add(telTextField);
 
 
-
-
+        JLabel dateLabel = new JLabel("Appointment Date");
+        dateLabel.setBounds(220,160,300,50);
+        addmenuPanel.add(dateLabel);
 
         DatePicker myDatePicker= new DatePicker();
-        JButton selectDateButton = new JButton();
+         myDatePicker.setBounds(200,200,200,25);
+        addmenuPanel.add(myDatePicker);
+
+        JLabel timeLabel = new JLabel("Appointment Time");
+        timeLabel.setBounds(220,215,300,50);
+        addmenuPanel.add(timeLabel);
+
+        String times[] = {"09","10","11","12","13","14","15","16","17"};
+        String minutes[] = new String[6];
+
+        for (int minute = 0; minute < 60; minute=minute + 10) {
+            
+           if(minute % 10 == 0) {minutes[(minute/10)] = String.format("%02d", minute);
+        
+        }
+
+            else{
+
+            }
+        }
+
+
+        JComboBox<String> timehour = new JComboBox<>(times);
+        timehour.setBounds(230,255,50,20);
+        addmenuPanel.add(timehour);
+
+        JLabel dotlabel = new JLabel(":");
+        dotlabel.setBounds(283,255,30,20);
+        addmenuPanel.add(dotlabel);
+
+
+        JComboBox<String> timeminute = new JComboBox<>(minutes);
+        timeminute.setBounds(290,255,50,20);
+        addmenuPanel.add(timeminute);
+        
+        
+
+        JButton selectDateButton = new JButton("Confirm");
         selectDateButton.setBounds(225,300,100,30);
         addmenuPanel.add(selectDateButton);
         selectDateButton.addActionListener(e -> {
@@ -73,8 +111,7 @@ public class AddButton extends MainMenu {
             }
         });
 
-        myDatePicker.setBounds(200,250,200,25);
-        addmenuPanel.add(myDatePicker);
+       
 
 
         addmenuFrame.setVisible(true);
@@ -86,15 +123,6 @@ public class AddButton extends MainMenu {
         AddPatient();
     }
 
- /*   private Date[] getDate(){
-       Date currentDate = new Date();
-       java.sql.Date curDate = new java.sql.Date(currentDate.getTime());
-       java.sql.Date appointDate[] = new java.sql.Date[30];
-        
-       Calendar calendar = Calendar.getInstance();
-       calendar.setTime(curDate);
 
-    }
-    */ 
 
 }
