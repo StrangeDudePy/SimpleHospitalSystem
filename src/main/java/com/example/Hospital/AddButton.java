@@ -14,10 +14,12 @@ import java.time.format.DateTimeFormatter;
 
 //Add Button Functionalaties Here
 public class AddButton extends MainMenu {
+    private static ErrorPreventforAddMenu errobj = new ErrorPreventforAddMenu();
     private static JFrame addmenuFrame = new JFrame() ;
     private static JPanel addmenuPanel  = new JPanel();
-    private static java.sql.Date StoredDate[] = new Date[1];
+    private static Object[] PatientData = new Object[6];
 
+    
 
     private static void AddPatient(){
 
@@ -103,10 +105,25 @@ public class AddButton extends MainMenu {
             LocalDate myDate = myDatePicker.getDate();
             String myFormattedDate = myDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             java.sql.Date sqlDate = java.sql.Date.valueOf(myFormattedDate);
-            StoredDate[0]= sqlDate;
             System.out.println(myFormattedDate);
+            PatientData[0]=idTextField.getText();
+            PatientData[1]=nameField.getText();
+            PatientData[2]=telTextField.getText();
+            PatientData[3]=sqlDate;
+            PatientData[4]=(String)timehour.getSelectedItem();
+            PatientData[5]=(String) timeminute.getSelectedItem();
+            errobj.getNameFormatter(PatientData);
+            
+
+                    
+           /* for (int i =0 ; i<= 5;i++){
+                System.out.println(PatientData[i]);
+            }
+            */ 
+            
             }
             catch(NullPointerException a){
+                System.out.println("Null Error");
                 
             }
         });
@@ -121,8 +138,10 @@ public class AddButton extends MainMenu {
 
     public void getAddPatientMethod(){
         AddPatient();
+       
     }
 
+    
 
 
 }
