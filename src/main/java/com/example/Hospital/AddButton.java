@@ -114,6 +114,22 @@ public class AddButton extends MainMenu {
             PatientData[5]=(String) timeminute.getSelectedItem();
             errobj.getNameFormatter(PatientData);
             
+            if(!errobj.getIdMethod(PatientData)){
+                System.out.println("Invalid Id");
+            }
+
+            if(!errobj.getPhoneMethod(PatientData)){
+                System.out.println("HELLO");
+            }
+
+            if(!errobj.getDateOkMethod(PatientData)){
+                System.out.println("Date is not ok");
+            }
+            
+            if(errobj.getDateOkMethod(PatientData)){
+                System.out.println("Date is ok");
+            }
+
 
                     
            /* for (int i =0 ; i<= 5;i++){

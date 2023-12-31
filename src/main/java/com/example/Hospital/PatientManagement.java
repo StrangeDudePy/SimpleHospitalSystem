@@ -30,7 +30,7 @@ public class PatientManagement  {
         try {
             int NoIndex = 0;
     
-            // Create a connection
+            
             try (Connection connectionOBJ = DriverManager.getConnection(PURL)) {
     
                 try (PreparedStatement NoStatement = connectionOBJ.prepareStatement(NoQuerry)) {
