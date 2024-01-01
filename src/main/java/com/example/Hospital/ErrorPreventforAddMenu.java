@@ -1,12 +1,13 @@
 package com.example.Hospital;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import java.sql.*;
 
-public class ErrorPreventforAddMenu {
-    private  static String EURL="jdbc:sqlite:Databases/Patients.db";
+public class ErrorPreventforAddMenu  {
+    private static AddButton aButton = new AddButton();
+    private static String EURL="jdbc:sqlite:Databases/Patients.db";
     private static String DateQuerry = "SELECT  AppointDate FROM PatientsInfo WHERE AppointDate=?";
+    private static String TimeQuerry = "SELECT AppointTime FROM PatientsInfo WHERE AppointTime=? ";
     private String nameFormatter(Object[] storedData) {
         String nameString = storedData[1].toString();
         String[] wordSeparated = nameString.split("\\s+");
@@ -16,12 +17,12 @@ public class ErrorPreventforAddMenu {
             if (!word.isEmpty() && !word.isBlank()) {
                 String formattedWord = word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
                 result.append(formattedWord).append(" ");
+            
             } else {
-                System.out.println("Invalid Name");
+                break;
             }
         }
     
-        System.out.println(result.toString().trim());
         return result.toString().trim();
     }
     
@@ -116,5 +117,80 @@ public class ErrorPreventforAddMenu {
         return isDateAvaliable(date_data);
     }
 
+    private boolean isTimeOkey(){
+        boolean timeOK= false;
+        String timeString = aButton.getTimeFormatter();
+        try {
+            
+            try (Connection conn = DriverManager.getConnection(EURL)) {
+    
+                try (PreparedStatement TimeStatement = conn.prepareStatement(TimeQuerry)) {
+
+
+                    TimeStatement.setString(1,timeString);
+    
+                    try (ResultSet rT = TimeStatement.executeQuery()) {
+                        
+                        if(rT.next()){
+                            return timeOK;
+                        }
+
+                        else{
+                            timeOK=true;
+                            return timeOK;
+                        }
+                        
+                    }
+                }
+            }
+    
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            return timeOK;
+        }
+    }
+
+    public boolean getTimeOkMethod(){
+        return isTimeOkey();
+    }
+
+    private void CheckEverything(Object[] id ,Object[] phonenumber ,Object[] date,Object[] name,String time){
+            Object Checks[][] = {{false,"ID"},{false,"Phone Number"},{false,"Appointment Date"},{false,"Appointment Time"}};
+            Checks[0][0]=(Boolean) IsIdlegit(id);
+            Checks[1][0]=(Boolean) IsPhoneLegit(phonenumber);
+            Checks[2][0]=(Boolean) isDateAvaliable(date);
+            Checks[3][0]=(Boolean) isTimeOkey();
+            
+            String errMessage="";
+            for(int i = 0 ; i <= 3  ;i++){
+                if(!(Boolean) Checks[i][0]){
+                String currentError= Checks[i][1].toString();
+                if(i==0){
+                    errMessage += " " +currentError;
+                }
+                else{
+                    errMessage += "-" + currentError;
+                }
+              
+                }
+                
+            }
+            
+            if(nameFormatter(name).isEmpty() || nameFormatter(name).isBlank()){
+                    errMessage += "-Name";
+                }
+       
+            System.out.println("Invalid"+ errMessage );
+
+          
+            
+           
+            
+    }
+
+    public void getCheckMethod(Object[] id ,Object[] phonenumber ,Object[] date,Object[] name ,String time ){
+        CheckEverything(id,phonenumber,date,name,time);
+    }
+    
   
 }

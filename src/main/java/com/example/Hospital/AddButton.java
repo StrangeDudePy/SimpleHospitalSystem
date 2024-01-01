@@ -130,6 +130,16 @@ public class AddButton extends MainMenu {
                 System.out.println("Date is ok");
             }
 
+               if(!errobj.getTimeOkMethod()){
+                System.out.println("Time is not ok");
+            }
+            
+            if(errobj.getTimeOkMethod()){
+                System.out.println("Time is ok");
+            }
+
+            errobj.getCheckMethod(PatientData, PatientData, PatientData,PatientData,TimeFormatter());
+
 
                     
            /* for (int i =0 ; i<= 5;i++){
@@ -158,6 +168,14 @@ public class AddButton extends MainMenu {
     }
 
     
+    private  static String  TimeFormatter(){
+        String time = PatientData[4].toString();
+        String minute = PatientData[5].toString();
+        String timeString = time+":"+minute;
+        return timeString;
+    }
 
-
+    public String getTimeFormatter(){
+        return TimeFormatter();
+    }
 }
