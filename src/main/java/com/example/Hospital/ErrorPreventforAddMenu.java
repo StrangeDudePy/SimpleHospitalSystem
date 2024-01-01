@@ -6,8 +6,7 @@ import java.sql.*;
 public class ErrorPreventforAddMenu  {
     private static AddButton aButton = new AddButton();
     private static String EURL="jdbc:sqlite:Databases/Patients.db";
-    private static String DateQuerry = "SELECT  AppointDate FROM PatientsInfo WHERE AppointDate=?";
-    private static String TimeQuerry = "SELECT AppointTime FROM PatientsInfo WHERE AppointTime=? ";
+    private static String DateQuerry = "SELECT  AppointDate,AppointTime FROM PatientsInfo WHERE AppointDate=? AND AppointTime=?";
     private String nameFormatter(Object[] storedData) {
         String nameString = storedData[1].toString();
         String[] wordSeparated = nameString.split("\\s+");
@@ -25,16 +24,42 @@ public class ErrorPreventforAddMenu  {
     
         return result.toString().trim();
     }
+
+  
     
 
     public void getNameFormatter(Object[] Data){
         nameFormatter(Data);
     }
 
-    private boolean isNumeric(String str) {
+    private  boolean isNumeric(String str) {
         
         return str.matches("\\d+");
     }
+
+    public static boolean containsNumeric(String input) {
+        return input.matches(".*\\d.*");
+    }
+
+
+    private boolean isNameLegit(Object[] nameData){
+        boolean namelegit=false;
+        if (containsNumeric(nameFormatter(nameData))){
+            return namelegit;
+        }
+
+        else if(containsNumeric(nameFormatter(nameData))==false) {
+            namelegit=true;
+            return namelegit;
+        }
+
+        else{
+            System.out.println("Unknown Error");
+            return namelegit;
+        }
+    }
+
+
 
     private boolean IsIdlegit(Object[] dataID){
         boolean idvalid = false;
@@ -50,6 +75,11 @@ public class ErrorPreventforAddMenu  {
         }
 
 
+    }
+
+
+    public boolean getNameLegitMethod(Object[] name_data){
+        return isNameLegit(name_data);
     }
 
     
@@ -82,6 +112,7 @@ public class ErrorPreventforAddMenu  {
     private boolean isDateAvaliable(Object[] D_Data){
         boolean dateOK= false;
         String DateString = D_Data[3].toString();
+        String TimeString = aButton.getTimeFormatter();
         try {
             
             try (Connection connection = DriverManager.getConnection(EURL)) {
@@ -90,6 +121,7 @@ public class ErrorPreventforAddMenu  {
 
 
                     DateStatement.setString(1,DateString);
+                    DateStatement.setString(2, TimeString);
     
                     try (ResultSet rD = DateStatement.executeQuery()) {
                         
@@ -117,70 +149,46 @@ public class ErrorPreventforAddMenu  {
         return isDateAvaliable(date_data);
     }
 
-    private boolean isTimeOkey(){
-        boolean timeOK= false;
-        String timeString = aButton.getTimeFormatter();
-        try {
-            
-            try (Connection conn = DriverManager.getConnection(EURL)) {
-    
-                try (PreparedStatement TimeStatement = conn.prepareStatement(TimeQuerry)) {
+   
 
-
-                    TimeStatement.setString(1,timeString);
-    
-                    try (ResultSet rT = TimeStatement.executeQuery()) {
-                        
-                        if(rT.next()){
-                            return timeOK;
-                        }
-
-                        else{
-                            timeOK=true;
-                            return timeOK;
-                        }
-                        
-                    }
-                }
-            }
-    
-        } catch (SQLException e) {
-            System.out.println("SQLException: " + e.getMessage());
-            return timeOK;
-        }
-    }
-
-    public boolean getTimeOkMethod(){
-        return isTimeOkey();
-    }
-
-    private void CheckEverything(Object[] id ,Object[] phonenumber ,Object[] date,Object[] name,String time){
-            Object Checks[][] = {{false,"ID"},{false,"Phone Number"},{false,"Appointment Date"},{false,"Appointment Time"}};
+    private void CheckEverything(Object[] id ,Object[] phonenumber ,Object[] date,Object[] name){
+            Object Checks[][] = {{false,"ID(Must be 8 numerical digits)"},{false,"Phone Number(Must be 12 numerical digits)"},{false,"Appointment Date-Time(The selected date already booked)"}};
             Checks[0][0]=(Boolean) IsIdlegit(id);
             Checks[1][0]=(Boolean) IsPhoneLegit(phonenumber);
             Checks[2][0]=(Boolean) isDateAvaliable(date);
-            Checks[3][0]=(Boolean) isTimeOkey();
+    
             
             String errMessage="";
-            for(int i = 0 ; i <= 3  ;i++){
+            int numberoferrors=0;
+            for(int i = 0 ; i <= 2  ;i++){
                 if(!(Boolean) Checks[i][0]){
                 String currentError= Checks[i][1].toString();
+                numberoferrors++;
                 if(i==0){
-                    errMessage += " " +currentError;
+                    errMessage = "<html>Invalid " + "<br>" +currentError;
                 }
                 else{
-                    errMessage += "-" + currentError;
+                    errMessage += "<br>" + currentError;
                 }
               
                 }
                 
             }
             
-            if(nameFormatter(name).isEmpty() || nameFormatter(name).isBlank()){
-                    errMessage += "-Name";
+            if(nameFormatter(name).isEmpty() || nameFormatter(name).isBlank()|| isNameLegit(name)==false){
+                    errMessage += "<br>Name(Name not entered and can't contain any numerical character)";
+                    numberoferrors++;
                 }
-       
-            System.out.println("Invalid"+ errMessage );
+            
+            if (numberoferrors==0){
+                System.out.println("Success");
+            }
+
+            else{
+                JFrame alertfFrame = new JFrame();
+                JOptionPane.showMessageDialog(alertfFrame, errMessage+"<br>" + "(Also Check whitespaces)" + "</html>");
+            }
+            
 
           
             
@@ -188,8 +196,8 @@ public class ErrorPreventforAddMenu  {
             
     }
 
-    public void getCheckMethod(Object[] id ,Object[] phonenumber ,Object[] date,Object[] name ,String time ){
-        CheckEverything(id,phonenumber,date,name,time);
+    public void getCheckMethod(Object[] id ,Object[] phonenumber ,Object[] date,Object[] name ){
+        CheckEverything(id,phonenumber,date,name);
     }
     
   

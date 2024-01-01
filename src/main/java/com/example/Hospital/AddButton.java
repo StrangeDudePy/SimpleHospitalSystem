@@ -122,23 +122,9 @@ public class AddButton extends MainMenu {
                 System.out.println("HELLO");
             }
 
-            if(!errobj.getDateOkMethod(PatientData)){
-                System.out.println("Date is not ok");
-            }
-            
-            if(errobj.getDateOkMethod(PatientData)){
-                System.out.println("Date is ok");
-            }
+       
 
-               if(!errobj.getTimeOkMethod()){
-                System.out.println("Time is not ok");
-            }
-            
-            if(errobj.getTimeOkMethod()){
-                System.out.println("Time is ok");
-            }
-
-            errobj.getCheckMethod(PatientData, PatientData, PatientData,PatientData,TimeFormatter());
+            errobj.getCheckMethod(PatientData, PatientData, PatientData,PatientData);
 
 
                     
