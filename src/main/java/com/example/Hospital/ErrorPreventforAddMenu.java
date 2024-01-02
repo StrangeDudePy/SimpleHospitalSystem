@@ -28,8 +28,8 @@ public class ErrorPreventforAddMenu  {
   
     
 
-    public void getNameFormatter(Object[] Data){
-        nameFormatter(Data);
+    public String getNameFormatter(Object[] Data){
+        return nameFormatter(Data);
     }
 
     private  boolean isNumeric(String str) {
@@ -151,54 +151,63 @@ public class ErrorPreventforAddMenu  {
 
    
 
-    private void CheckEverything(Object[] id ,Object[] phonenumber ,Object[] date,Object[] name){
+    private boolean CheckEverything(Object[] id ,Object[] phonenumber ,Object[] date,Object[] name){
             Object Checks[][] = {{false,"ID(Must be 8 numerical digits)"},{false,"Phone Number(Must be 12 numerical digits)"},{false,"Appointment Date-Time(The selected date already booked)"}};
             Checks[0][0]=(Boolean) IsIdlegit(id);
             Checks[1][0]=(Boolean) IsPhoneLegit(phonenumber);
             Checks[2][0]=(Boolean) isDateAvaliable(date);
-    
+            boolean everythingfine=true;
             
-            String errMessage="";
+            String errMessage="<html>";
             int numberoferrors=0;
             for(int i = 0 ; i <= 2  ;i++){
                 if(!(Boolean) Checks[i][0]){
                 String currentError= Checks[i][1].toString();
                 numberoferrors++;
-                if(i==0){
-                    errMessage = "<html>Invalid " + "<br>" +currentError;
-                }
-                else{
-                    errMessage += "<br>" + currentError;
-                }
-              
-                }
+                errMessage += "Invalid " +  currentError + "<br>" ;
+                
+    
                 
             }
             
+             }
             if(nameFormatter(name).isEmpty() || nameFormatter(name).isBlank()|| isNameLegit(name)==false){
-                    errMessage += "<br>Name(Name not entered and can't contain any numerical character)";
+                    errMessage += "Invalid Name(Name not entered and can't contain any numerical character)";
                     numberoferrors++;
+                    everythingfine =false;
+                    
                 }
+
+            if(numberoferrors!=0){
+                JFrame alertfFrame = new JFrame();
+                JOptionPane.showMessageDialog(alertfFrame, errMessage+"<br>"+ "(Also Check whitespaces)" + "</html>");
+                everythingfine=false;
+            }
             
-            if (numberoferrors==0){
-                System.out.println("Success");
+            else if (numberoferrors==0){
+                everythingfine = true;
             }
 
-            else{
-                JFrame alertfFrame = new JFrame();
-                JOptionPane.showMessageDialog(alertfFrame, errMessage+"<br>" + "(Also Check whitespaces)" + "</html>");
-            }
+           
+            return everythingfine;
+
             
 
           
             
            
             
+   
+
+    }
+    public void getCheckMethod(Object[] id ,Object[] phonenumber ,Object[] date,Object[] name ){
+       CheckEverything(id,phonenumber,date,name);
     }
 
-    public void getCheckMethod(Object[] id ,Object[] phonenumber ,Object[] date,Object[] name ){
-        CheckEverything(id,phonenumber,date,name);
+    public boolean returnCheckMethod(Object[] id ,Object[] phonenumber ,Object[] date,Object[] name ){
+         return  CheckEverything(id,phonenumber,date,name);
     }
+
     
   
 }

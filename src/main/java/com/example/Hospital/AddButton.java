@@ -3,7 +3,7 @@ import javax.swing.*;
 
 import com.github.lgooddatepicker.components.DatePicker;
 
-
+import java.math.BigInteger;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -15,10 +15,11 @@ import java.time.format.DateTimeFormatter;
 //Add Button Functionalaties Here
 public class AddButton extends MainMenu {
     private static ErrorPreventforAddMenu errobj = new ErrorPreventforAddMenu();
+    protected static String AURL="jdbc:sqlite:Databases/Patients.db";
     private static JFrame addmenuFrame = new JFrame() ;
     private static JPanel addmenuPanel  = new JPanel();
     private static Object[] PatientData = new Object[6];
-
+    private static RSA RSobject =new RSA();
     
 
     private static void AddPatient(){
@@ -113,18 +114,51 @@ public class AddButton extends MainMenu {
             PatientData[4]=(String)timehour.getSelectedItem();
             PatientData[5]=(String) timeminute.getSelectedItem();
             errobj.getNameFormatter(PatientData);
+           
+
             
-            if(!errobj.getIdMethod(PatientData)){
-                System.out.println("Invalid Id");
+
+            if(errobj.returnCheckMethod(PatientData, PatientData, PatientData,PatientData)){
+                BigInteger nameInt= new BigInteger(errobj.getNameFormatter(PatientData).getBytes());
+                BigInteger idInt = new BigInteger(PatientData[0].toString());
+                nameInt = new BigInteger(errobj.getNameFormatter(PatientData).getBytes());
+                BigInteger telInt = new BigInteger(PatientData[2].toString());
+          
+
+
+                
+                String patientQuerry="INSERT INTO PatientsInfo (PatientNo,PatientName,AppointDate,ID,AppointTime,TelNo) VALUES(?,?,?,?,?,?)";
+
+
+                try(Connection connec = DriverManager.getConnection(AURL)){
+
+                    try(PreparedStatement inserstmt = connec.prepareStatement(patientQuerry)){
+                        inserstmt.setInt(1,getLastNo()+1);
+                        inserstmt.setString(2,RSobject.encrypt(nameInt).toString());
+                        inserstmt.setDate(3,(java.sql.Date) PatientData[3]);
+                        inserstmt.setString(4,RSobject.encrypt(idInt).toString());
+                        inserstmt.setString(5,PatientData[4].toString()+":"+PatientData[5].toString());
+                        inserstmt.setString(6,RSobject.encrypt(telInt).toString());
+
+
+                        inserstmt.executeUpdate();
+                    }
+                }
+                catch(SQLException b){
+                    b.getMessage();
+                }
+                    
+                
             }
 
-            if(!errobj.getPhoneMethod(PatientData)){
-                System.out.println("HELLO");
-            }
 
-       
+          
 
-            errobj.getCheckMethod(PatientData, PatientData, PatientData,PatientData);
+
+
+
+
+
 
 
                     
@@ -164,4 +198,34 @@ public class AddButton extends MainMenu {
     public String getTimeFormatter(){
         return TimeFormatter();
     }
+
+
+    private static int getLastNo(){
+        int MaxNo=0;
+        try(Connection conn = DriverManager.getConnection(AURL))
+        {
+
+            String noquery = "SELECT MAX (PatientNo) FROM PatientsInfo";
+
+            try(PreparedStatement noStatement = conn.prepareStatement(noquery);
+                ResultSet resultSet = noStatement.executeQuery()){
+                {
+                    if(resultSet.next()){
+                        MaxNo = resultSet.getInt("PatientNo");
+                        
+                    }
+
+                    else{
+                        MaxNo=0;
+                    }
+                }
+
+
+            }
+        } catch(SQLException e){
+            e.getMessage();
+        }
+        return MaxNo;
+    }
+    
 }
