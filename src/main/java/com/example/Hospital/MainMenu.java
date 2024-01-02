@@ -4,7 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.Date;
 
+
 public class MainMenu extends GUI { 
+   
     private static StaffSystem staffSystem = new StaffSystem();
     private static JButton addButton = new JButton("Add");
     private static JButton deleteButton = new JButton("Delete");
@@ -97,7 +99,6 @@ public class MainMenu extends GUI {
     public void CreateOption1Page(JFrame x , JTable y){
         Object[][] data = new Object[100][6];
         
-        
         x = new JFrame();
         x.setResizable(false);
        
@@ -107,6 +108,8 @@ public class MainMenu extends GUI {
         for(int k = 0; NameData[k]!=null;k++)
         {
             for (int j = 0 ; j <= k ; j++){
+
+          
                 data[k][0] = NumberData[k];
                 data[k][1] = NameData[k];
                 data[k][2] = IDdata[k];

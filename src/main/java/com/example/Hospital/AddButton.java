@@ -3,7 +3,6 @@ import javax.swing.*;
 
 import com.github.lgooddatepicker.components.DatePicker;
 
-import java.math.BigInteger;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,8 +18,7 @@ public class AddButton extends MainMenu {
     private static JFrame addmenuFrame = new JFrame() ;
     private static JPanel addmenuPanel  = new JPanel();
     private static Object[] PatientData = new Object[6];
-    private static RSA RSobject =new RSA();
-    
+
 
     private static void AddPatient(){
 
@@ -68,6 +66,7 @@ public class AddButton extends MainMenu {
         timeLabel.setBounds(220,215,300,50);
         addmenuPanel.add(timeLabel);
 
+
         String times[] = {"09","10","11","12","13","14","15","16","17"};
         String minutes[] = new String[6];
 
@@ -106,7 +105,6 @@ public class AddButton extends MainMenu {
             LocalDate myDate = myDatePicker.getDate();
             String myFormattedDate = myDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             java.sql.Date sqlDate = java.sql.Date.valueOf(myFormattedDate);
-            System.out.println(myFormattedDate);
             PatientData[0]=idTextField.getText();
             PatientData[1]=nameField.getText();
             PatientData[2]=telTextField.getText();
@@ -114,15 +112,12 @@ public class AddButton extends MainMenu {
             PatientData[4]=(String)timehour.getSelectedItem();
             PatientData[5]=(String) timeminute.getSelectedItem();
             errobj.getNameFormatter(PatientData);
+            int i = getLastNo();
            
 
             
 
             if(errobj.returnCheckMethod(PatientData, PatientData, PatientData,PatientData)){
-                BigInteger nameInt= new BigInteger(errobj.getNameFormatter(PatientData).getBytes());
-                BigInteger idInt = new BigInteger(PatientData[0].toString());
-                nameInt = new BigInteger(errobj.getNameFormatter(PatientData).getBytes());
-                BigInteger telInt = new BigInteger(PatientData[2].toString());
           
 
 
@@ -133,12 +128,13 @@ public class AddButton extends MainMenu {
                 try(Connection connec = DriverManager.getConnection(AURL)){
 
                     try(PreparedStatement inserstmt = connec.prepareStatement(patientQuerry)){
-                        inserstmt.setInt(1,getLastNo()+1);
-                        inserstmt.setString(2,RSobject.encrypt(nameInt).toString());
-                        inserstmt.setDate(3,(java.sql.Date) PatientData[3]);
-                        inserstmt.setString(4,RSobject.encrypt(idInt).toString());
+                        inserstmt.setInt(1,i+1);
+                        inserstmt.setString(2,errobj.getNameFormatter(PatientData));
+                        inserstmt.setDate(3,sqlDate);
+                        inserstmt.setString(4,PatientData[0].toString());
                         inserstmt.setString(5,PatientData[4].toString()+":"+PatientData[5].toString());
-                        inserstmt.setString(6,RSobject.encrypt(telInt).toString());
+                        inserstmt.setString(6,PatientData[2].toString());
+                
 
 
                         inserstmt.executeUpdate();
@@ -147,7 +143,8 @@ public class AddButton extends MainMenu {
                 catch(SQLException b){
                     b.getMessage();
                 }
-                    
+                
+                System.out.println(sqlDate);
                 
             }
 
@@ -169,7 +166,7 @@ public class AddButton extends MainMenu {
             
             }
             catch(NullPointerException a){
-                System.out.println("Null Error");
+                System.out.println("Null Error: "+a.getMessage());
                 
             }
         });
@@ -200,32 +197,27 @@ public class AddButton extends MainMenu {
     }
 
 
-    private static int getLastNo(){
-        int MaxNo=0;
-        try(Connection conn = DriverManager.getConnection(AURL))
-        {
-
-            String noquery = "SELECT MAX (PatientNo) FROM PatientsInfo";
-
-            try(PreparedStatement noStatement = conn.prepareStatement(noquery);
-                ResultSet resultSet = noStatement.executeQuery()){
-                {
-                    if(resultSet.next()){
-                        MaxNo = resultSet.getInt("PatientNo");
-                        
-                    }
-
-                    else{
-                        MaxNo=0;
-                    }
+    private static int getLastNo() {
+        int maxNo = 1;
+    
+        try (Connection conn = DriverManager.getConnection(AURL)) {
+            String noquery = "SELECT MAX(PatientNo) AS MaxValue FROM PatientsInfo";
+    
+            try (PreparedStatement noStatement = conn.prepareStatement(noquery);
+                 ResultSet resultSet = noStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    maxNo = resultSet.getInt("MaxValue");
+                } else {
+                    maxNo = 0;
                 }
-
-
             }
-        } catch(SQLException e){
-            e.getMessage();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return MaxNo;
+    
+        return maxNo;
     }
+    
+    
     
 }

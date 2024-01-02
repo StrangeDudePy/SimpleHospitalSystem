@@ -3,6 +3,7 @@ package com.example.Hospital;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.*;
+
 import java.sql.*;
 
 
@@ -26,6 +27,7 @@ public class PatientManagement  {
     private static String appointTime[] = new String[100];
     private static String telNo[] = new String[100];
 
+
     protected int[] getpatintNo() {
         try {
             int NoIndex = 0;
@@ -38,6 +40,7 @@ public class PatientManagement  {
                     try (ResultSet rNo = NoStatement.executeQuery()) {
     
                         while (rNo.next()) {
+                    
                             patientsNOs[NoIndex] = rNo.getInt("PatientNo");
                             NoIndex++;
                           
@@ -68,6 +71,7 @@ public class PatientManagement  {
                     try (ResultSet rNo = NoStatement.executeQuery()) {
     
                         while (rNo.next()) {
+                      
                             patientsID[IDIndex] = rNo.getString("ID");
                             IDIndex++;
                           
@@ -97,6 +101,7 @@ public class PatientManagement  {
                     try (ResultSet rNo = NoStatement.executeQuery()) {
     
                         while (rNo.next()) {
+
                             patientNames[NameIndex] = rNo.getString("PatientName");
                             NameIndex++;
                           
@@ -129,15 +134,15 @@ public class PatientManagement  {
 
                     while (rNo.next()) {
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                        java.util.Date utilDate = dateFormat.parse(rNo.getString("AppointDate"));
-                        appointDate[DateIndex] = new java.sql.Date(utilDate.getTime());
+                        java.sql.Date D =rNo.getDate("AppointDate");
+                        appointDate[DateIndex] = D;
                         DateIndex++;
                     }
                 }
             }
         }
 
-    } catch (SQLException | ParseException e) {
+    } catch (SQLException e ) {
         System.out.println("SQLException: " + e.getMessage());
     }
 
@@ -189,6 +194,8 @@ protected String[] getpatinttelNo() {
                     try (ResultSet rNo = NoStatement.executeQuery()) {
     
                         while (rNo.next()) {
+
+                        
                             telNo[telNoIndex] = rNo.getString("TelNo");
                             telNoIndex++;
                           
