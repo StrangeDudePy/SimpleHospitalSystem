@@ -148,25 +148,11 @@ public class AddButton extends MainMenu {
                 
             }
 
-
-          
-
-
-
-
-
-
-
-
-                    
-           /* for (int i =0 ; i<= 5;i++){
-                System.out.println(PatientData[i]);
-            }
-            */ 
             
             }
             catch(NullPointerException a){
-                System.out.println("Null Error: "+a.getMessage());
+                JFrame alerFrame = new JFrame();
+                JOptionPane.showMessageDialog(alerFrame,"Choose Date","title",JOptionPane.WARNING_MESSAGE);
                 
             }
         });

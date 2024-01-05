@@ -59,16 +59,14 @@ public class GUI extends PatientManagement implements ActionListener {
     private static JPanel panel = new JPanel();
     private static JFrame frame = new JFrame();
     private static JButton option1 = new JButton();
-    private static JButton option2 = new JButton();
-    private static JButton option3 = new JButton();
-    private static JButton option4 = new JButton();
+ 
     private static JPanel panele = new JPanel();
     
 
     //new window if the login is succesful
     protected static void  NewWindow(JFrame obj){
         obj.dispose();
-        MainMenu.createMainMenu(option1,option2,option3,option4,panele,newwindowFrame);
+        MainMenu.createMainMenu(option1,panele,newwindowFrame);
     }
     
 

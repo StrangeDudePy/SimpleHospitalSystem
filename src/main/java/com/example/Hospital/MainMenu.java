@@ -10,7 +10,7 @@ public class MainMenu extends GUI {
     private static StaffSystem staffSystem = new StaffSystem();
     private static JButton addButton = new JButton("Add");
     private static JButton deleteButton = new JButton("Delete");
-    private static JButton editButton = new JButton("Edit");
+
     private static JPanel buttonPanel = new JPanel(new FlowLayout());
     static PatientManagement managementObj = new PatientManagement();
     
@@ -36,7 +36,7 @@ public class MainMenu extends GUI {
 
 
 
-    protected static void createMainMenu(JButton option1, JButton option2, JButton option3, JButton option4, JPanel panel, JFrame frame) {
+    protected static void createMainMenu(JButton option1,JPanel panel, JFrame frame) {
 
         frame.setSize(1200, 800);
         frame.add(panel);
@@ -44,7 +44,7 @@ public class MainMenu extends GUI {
         frame.setResizable(false);
         MainMenu nMainMenu = new MainMenu();
         PatientManagement mngObj = new PatientManagement();
-        ImageIcon imageIcon = new ImageIcon("/home/sefa/Downloads/HospitalAdminPanel.png");
+        ImageIcon imageIcon = new ImageIcon("/home/sefa/Downloads/Medical Logo Design Template, Hospital Logo Vector - 1024x768.png");
         Image image = imageIcon.getImage();
         Image newImage = image.getScaledInstance(400, 300, Image.SCALE_DEFAULT);
         ImageIcon newImageIcon = new ImageIcon(newImage);
@@ -55,8 +55,8 @@ public class MainMenu extends GUI {
         frame.add(imageLabel);
 
         option1 = new JButton("Patient Management System");
-        option1.setBounds(300, 450, 600, 50);
-        option1.addActionListener(e -> {System.out.println("Poo");
+        option1.setBounds(300, 500, 600, 50);
+        option1.addActionListener(e -> {
         mngObj.getpatintNo();
         mngObj.getpatintID();
         mngObj.getpatintName();
@@ -66,20 +66,6 @@ public class MainMenu extends GUI {
         frame.add(option1);
     
 
-        option2 = new JButton("Option 2 ");
-        option2.setBounds(300, 525, 600, 50);
-        option2.addActionListener(new GUI());
-        frame.add(option2);
-
-        option3 = new JButton("Option 3 ");
-        option3.setBounds(300, 600, 600, 50);
-        option3.addActionListener(new GUI());
-        frame.add(option3);
-
-        option4 = new JButton("Option 4");
-        option4.setBounds(300, 675, 600, 50);
-        option4.addActionListener(new GUI());
-        frame.add(option4);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -143,8 +129,7 @@ public class MainMenu extends GUI {
         
         addButton.addActionListener(e -> { if (staffSystem.AccessCheck(super.getid()) == 1){
             JFrame alerfFrame = new JFrame();
-            Addthing.getAddPatientMethod();
-            //JOptionPane.showMessageDialog(alerfFrame, "Access Denied");
+            JOptionPane.showMessageDialog(alerfFrame, "Access Denied");
             
         }
        else {
@@ -158,21 +143,14 @@ public class MainMenu extends GUI {
             
         }
        else {
-            System.out.println("3");
+            Addthing.getDeletePatientMethod();
         }});
 
-        editButton.addActionListener(e -> { if (staffSystem.AccessCheck(super.getid()) == 1){
-            JFrame alerfmodifyFrame = new JFrame();
-            JOptionPane.showMessageDialog(alerfmodifyFrame, "Access Denied");
-            
-        }
-       else {
-            System.out.println("3");
-        }});
+       
     
         buttonPanel.add(addButton);
         buttonPanel.add(deleteButton);
-        buttonPanel.add(editButton);
+
 
         x.add(buttonPanel,BorderLayout.SOUTH);
 

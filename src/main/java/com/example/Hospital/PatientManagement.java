@@ -26,6 +26,9 @@ public class PatientManagement  {
     private static String patientNames[] = new String[100];
     private static String appointTime[] = new String[100];
     private static String telNo[] = new String[100];
+    private static JFrame deleteFrame = new JFrame();
+    private static JFrame conFrame = new JFrame();
+
 
 
     protected int[] getpatintNo() {
@@ -224,64 +227,95 @@ protected String[] getpatinttelNo() {
    
 
 
-    private void DeletePatient(){
-
-    }
-
-    private void ModifyPatient(){
+    private void DeletePatient() {
+        deleteFrame.setSize(600, 400);
         
-    }
+        
 
+        deleteFrame.setLayout(null);
+        deleteFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     
-    /*private void CreatePatientAddPage(){
-        JPanel addpanel = new JPanel();
-        JFrame addFrame = new JFrame();
-        JLabel patientNameLabel ;
-        JLabel patientAppointDate ;
-        JLabel patientIDLabel ;
-        JTextField nameField;
-        JTextField dateField;
-        JTextField idfield;
+   
+        JLabel idfLabel = new JLabel("Patient ID");
+        idfLabel.setBounds(250,25,100, 25);
+        deleteFrame.add(idfLabel);
+    
+        JTextField idfTextField = new JTextField();
+        idfTextField.setBounds(150, 50, 300, 25);
+        deleteFrame.add(idfTextField);
 
-        addFrame.setSize(400,300);
-        addFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        JButton deleteButton = new JButton("Confirm");
+        deleteButton.setBounds(225,100,125,25);
+        deleteFrame.add(deleteButton);
+        deleteButton.addActionListener(e -> {
+            conFrame.dispose();
+            String idtodelete = idfTextField.getText();
+            conFrame.setLayout(null);
+            conFrame.setSize(500,200);
 
-        addFrame.add(addpanel);
+            deleteFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            JLabel confirmLabel = new JLabel("Enter 'CONFIRM' to the box to confirm your action");
+            confirmLabel.setBounds(75, 25, 370, 25);
+            conFrame.add(confirmLabel);
 
-        addpanel.setLayout(null);
-
-
-        patientNameLabel = new JLabel("Patient Name");
-        patientNameLabel.setBounds(10,50,80,25);
-        addpanel.add(patientNameLabel);
-
-        nameField = new JTextField();
-        nameField.setBounds(180,50,165,25);
-        nameField.add(nameField);
-
-        idfield = new JLabel("Patient ID");
-        idfield.setBounds(10, 80, 150, 25);
-        mnpanel.add(mnauthTextLabel);
-
-        mnauthTextField = new JTextField();
-        mnauthTextField.setBounds(180,80, 165,25);
-        mnpanel.add(mnauthTextField);
-
-        
-        mnconbutton = new JButton("Login");
-        mnconbutton.setBounds(10,110,80,25);
-        mnconbutton.addActionListener(new GUI());
-        mnpanel.add(mnconbutton);
+            JTextField conTextField = new JTextField();
+            conTextField.setBounds(150,50 ,200,25);
+            conFrame.add(conTextField);
 
 
+            JButton con2Button = new JButton("OK");
+            con2Button.setBounds(200,100,75, 25);
+            conFrame.add(con2Button);
+            con2Button.addActionListener(a -> {
+                if(conTextField.getText().equals("CONFIRM")){
+                    String columnValueToDelete = idtodelete;
+            
+                    try (Connection connection = DriverManager.getConnection(PURL)) {
+                        String sql = "DELETE FROM PatientsInfo WHERE ID = ?";
+                        
+                        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                            preparedStatement.setString(1, columnValueToDelete);
+                            preparedStatement.executeUpdate();
+                            JFrame alerfFrame = new JFrame();
+                            JOptionPane.showMessageDialog(conFrame,"USER DELETED SUCCESSFULLY","USERINFO",JOptionPane.INFORMATION_MESSAGE);
+                            conFrame.dispose();
+                            deleteFrame.dispose();
+                        }
+                    } catch (SQLException b) {
+                        JFrame alerfFrame = new JFrame();
+                        JOptionPane.showMessageDialog(conFrame,"ERROR","SYSTEM ERROR",JOptionPane.WARNING_MESSAGE);
+                    }
+
+                }
+
+                else{
+                    JFrame alerfFrame = new JFrame();
+                    JOptionPane.showMessageDialog(conFrame,"Wrong Input","title",JOptionPane.WARNING_MESSAGE);
+                }
+            });
+
+            conFrame.setVisible(true);
+            conFrame.setResizable(false);
+
+            
 
 
 
+            
+        });
+    
+
+     
+
+        deleteFrame.setVisible(true);
+        deleteFrame.setResizable(false);
     }
-    */
-    private void AddPatient(){
-        
+
+
+    public void getDeletePatientMethod(){
+        DeletePatient();
     }
+    
 
     
     

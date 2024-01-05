@@ -152,15 +152,16 @@ public class ErrorPreventforAddMenu  {
    
 
     private boolean CheckEverything(Object[] id ,Object[] phonenumber ,Object[] date,Object[] name){
-            Object Checks[][] = {{false,"ID(Must be 8 numerical digits)"},{false,"Phone Number(Must be 12 numerical digits)"},{false,"Appointment Date-Time(The selected date already booked)"}};
+            Object Checks[][] = {{false,"ID(Must be 8 numerical digits)"},{false,"Phone Number(Must be 12 numerical digits)"},{false,"Appointment Date-Time(The selected date already booked)"},{false,",ID Already Exist"}};
             Checks[0][0]=(Boolean) IsIdlegit(id);
             Checks[1][0]=(Boolean) IsPhoneLegit(phonenumber);
             Checks[2][0]=(Boolean) isDateAvaliable(date);
+            Checks[3][0] =(Boolean) isIdExist(id);
             boolean everythingfine=true;
             
             String errMessage="<html>";
             int numberoferrors=0;
-            for(int i = 0 ; i <= 2  ;i++){
+            for(int i = 0 ; i <= 3  ;i++){
                 if(!(Boolean) Checks[i][0]){
                 String currentError= Checks[i][1].toString();
                 numberoferrors++;
@@ -186,6 +187,7 @@ public class ErrorPreventforAddMenu  {
             
             else if (numberoferrors==0){
                 everythingfine = true;
+                return everythingfine;
             }
 
            
@@ -208,6 +210,31 @@ public class ErrorPreventforAddMenu  {
          return  CheckEverything(id,phonenumber,date,name);
     }
 
+
+    private boolean isIdExist(Object[] Data){
+        boolean idavaliable=true;
+        try (Connection connection = DriverManager.getConnection(EURL)) {
+            String idmatchquerry = "SELECT ID FROM PatientsInfo WHERE ID = ?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(idmatchquerry)) {
+                preparedStatement.setString(1, Data[0].toString());
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        idavaliable=false;
+                        
+                    } else {
+                        idavaliable=true;
+                    
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return idavaliable;
+    }
     
   
 }
