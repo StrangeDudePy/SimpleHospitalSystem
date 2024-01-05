@@ -1,6 +1,5 @@
 
 package com.example.Hospital;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.*;
 
@@ -12,7 +11,7 @@ public class PatientManagement  {
     JFrame pamanagementFrame = new JFrame();
     JTable pmanagemenTable = new JTable();
     private JFrame o1Frame = new JFrame();
-    private  JTable o1JTable= new JTable() ;
+    private JTable o1JTable= new JTable() ;
     protected static String PURL="jdbc:sqlite:Databases/Patients.db";
     private static String NoQuerry = "SELECT PatientNo FROM PatientsInfo";
     private static String IDQuerry = "SELECT ID FROM PatientsInfo";
@@ -277,9 +276,10 @@ protected String[] getpatinttelNo() {
                             preparedStatement.setString(1, columnValueToDelete);
                             preparedStatement.executeUpdate();
                             JFrame alerfFrame = new JFrame();
-                            JOptionPane.showMessageDialog(conFrame,"USER DELETED SUCCESSFULLY","USERINFO",JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(conFrame,"USER DELETED SUCCESSFULLY,RESTART THE PROGRAM TO SEE THE CHANGES","USERINFO",JOptionPane.INFORMATION_MESSAGE);
                             conFrame.dispose();
                             deleteFrame.dispose();
+                         
                         }
                     } catch (SQLException b) {
                         JFrame alerfFrame = new JFrame();
@@ -316,6 +316,7 @@ protected String[] getpatinttelNo() {
         DeletePatient();
     }
     
+
 
     
     

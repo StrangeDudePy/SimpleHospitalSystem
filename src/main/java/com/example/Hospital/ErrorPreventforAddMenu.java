@@ -2,6 +2,8 @@ package com.example.Hospital;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class ErrorPreventforAddMenu  {
     private static AddButton aButton = new AddButton();
@@ -109,41 +111,40 @@ public class ErrorPreventforAddMenu  {
 
 
 
-    private boolean isDateAvaliable(Object[] D_Data){
-        boolean dateOK= false;
-        String DateString = D_Data[3].toString();
-        String TimeString = aButton.getTimeFormatter();
-        try {
-            
-            try (Connection connection = DriverManager.getConnection(EURL)) {
-    
-                try (PreparedStatement DateStatement = connection.prepareStatement(DateQuerry)) {
+   private boolean isDateAvaliable(Object[] D_Data) {
+    boolean dateOK = false;
+    String dateString = D_Data[3].toString();
+    String timeString = aButton.getTimeFormatter();
 
+    try {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date utilDate = dateFormat.parse(dateString);
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
-                    DateStatement.setString(1,DateString);
-                    DateStatement.setString(2, TimeString);
-    
-                    try (ResultSet rD = DateStatement.executeQuery()) {
-                        
-                        if(rD.next()){
-                            return dateOK;
-                        }
+        try (Connection connection = DriverManager.getConnection(EURL)) {
 
-                        else{
-                            dateOK=true;
-                            return dateOK;
-                        }
-                        
+            try (PreparedStatement DateStatement = connection.prepareStatement(DateQuerry)) {
+                DateStatement.setDate(1, sqlDate);
+                DateStatement.setString(2, timeString);
+
+                try (ResultSet rD = DateStatement.executeQuery()) {
+                    if (rD.next()) {
+                        // Date and time are already in the database
+                        return dateOK;
+                    } else {
+                        // Date and time are available
+                        dateOK = true;
+                        return dateOK;
                     }
                 }
             }
-    
-        } catch (SQLException e) {
-            System.out.println("SQLException: " + e.getMessage());
-            return dateOK;
         }
-        
+    } catch (ParseException | SQLException e) {
+        System.out.println("Exception: " + e.getMessage());
+        return dateOK;
     }
+}
+
 
     public boolean getDateOkMethod(Object[] date_data){
         return isDateAvaliable(date_data);

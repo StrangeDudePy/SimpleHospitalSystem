@@ -144,7 +144,8 @@ public class AddButton extends MainMenu {
                     b.getMessage();
                 }
                 
-                System.out.println(sqlDate);
+                JFrame okFrame = new JFrame();
+                JOptionPane.showMessageDialog(okFrame,"Patient Successfully Added , Please restart the program to see the changes");
                 
             }
 
